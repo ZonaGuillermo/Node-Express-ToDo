@@ -6,5 +6,5 @@ You will find a SQL file with the database and tables ready to import in your da
 
 Also you need to rename the .envVOID file to .env and fill the variables with your own values.
 
-Good lock and enjoy :-)
+Good luck and enjoy :-)
 
