@@ -1,4 +1,4 @@
 # Ignore the following directories and files regardless their location
 **/node_modules
 **/.env
-
+**/doc
