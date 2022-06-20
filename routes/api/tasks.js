@@ -1,35 +1,24 @@
 import express from 'express';
+import * as taskModel from '../../models/task.model.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-	const tasks = await new Promise((resolve, reject) => {
-		db.query('select * from task', (err, result) => {
-			if (err) return reject(err);
-			return resolve(result);
-		});
-	});
-
-	res.status(200).json(tasks);
+	try {
+		const tasks = await taskModel.getAll();
+		res.status(200).json(tasks);
+	} catch (err) {
+		res.json({ error: err.message });
+	}
 });
 
 
 router.get('/:id', async (req, res) => {
 	try {
-		const prom = await new Promise((resolve, reject) => {
-			db.query('select * from task where id=?',
-				[req.params.id],
-				(err, result) => {
-					if (err) return reject(err);
-					if (result.length === 0) return resolve({ msj: 'No existe la tarea'})
-					resolve(result);
-			})
-		})
-
+		const prom = await taskModel.getById(req.params.id);
 		res.json(prom);
 	} catch (err) {
-		console.log('Estoy en el catch');
-		res.json(err);
+		res.json({ error: err.message });
 	}
 })
 
